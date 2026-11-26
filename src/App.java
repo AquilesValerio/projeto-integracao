@@ -17,28 +17,20 @@ public class App {
       opcao = lerNumero("Escolha uma opção: ");
 
       try {
-        switch (opcao) {
-          case 1:
-            cadastrar();
-            break;
-          case 2:
-            listar();
-            break;
-          case 3:
-            buscar();
-            break;
-          case 4:
-            alterar();
-            break;
-          case 5:
-            excluir();
-            break;
-          case 0:
-            System.out.println("Encerrando o EmprestaLab. Até logo!");
-            break;
-          default:
-            System.out.println("Opção inválida. Digite um número de 0 a 5.");
-            break;
+        if (opcao == 1) {
+          cadastrar();
+        } else if (opcao == 2) {
+          listar();
+        } else if (opcao == 3) {
+          buscar();
+        } else if (opcao == 4) {
+          alterar();
+        } else if (opcao == 5) {
+          excluir();
+        } else if (opcao == 0) {
+          System.out.println("Encerrando o EmprestaLab. Até logo!");
+        } else {
+          System.out.println("Opção inválida. Digite um número de 0 a 5.");
         }
       } catch (IllegalArgumentException e) {
         System.out.println("Erro: " + e.getMessage());
