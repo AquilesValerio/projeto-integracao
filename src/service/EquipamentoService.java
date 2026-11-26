@@ -1,43 +1,56 @@
 package service;
 
-import java.util.ArrayList;
-
 import entities.Equipamento;
+import repository.EquipamentoRepository;
+import java.util.List;
 
 public class EquipamentoService {
 
-  private ArrayList<Equipamento> bancoMemoria = new ArrayList<>();
+ 
+  private EquipamentoRepository repository;
   private int cont = 0;
+
+ 
+  public EquipamentoService(EquipamentoRepository repository) {
+    this.repository = repository;
+  }
 
   public Equipamento cadastrar(String nome, String patrimonio) {
     cont++;
     Equipamento equipamento = new Equipamento(cont, nome, patrimonio);
-    bancoMemoria.add(equipamento);
+
+   
+    repository.cadastrar(equipamento);
     return equipamento;
   }
 
-  public ArrayList<Equipamento> listar() {
-    return bancoMemoria;
+  public List<Equipamento> listar() {
+    return repository.listar();
   }
 
   public Equipamento buscarPorCodigo(int codigo) {
-    for (Equipamento equipamento : bancoMemoria) {
-      if (equipamento.getCodigo() == codigo) {
-        return equipamento;
-      }
+    Equipamento equipamento = repository.buscarPorCodigo(codigo);
+
+    if (equipamento == null) {
+      throw new IllegalArgumentException("Equipamento não encontrado.");
     }
-    throw new IllegalArgumentException("Equipamento não encontrado.");
+    return equipamento;
   }
 
   public void alterar(int codigo, String novoNome, String novoPatrimonio) {
+    
     Equipamento equipamento = buscarPorCodigo(codigo);
+
     equipamento.setNome(novoNome);
     equipamento.setPatrimonio(novoPatrimonio);
+
+   
+    repository.alterar(equipamento);
   }
 
   public void excluir(int codigo) {
-    Equipamento equipamento = buscarPorCodigo(codigo);
-    bancoMemoria.remove(equipamento);
+    
+    buscarPorCodigo(codigo);
+    repository.excluir(codigo);
   }
-
 }
